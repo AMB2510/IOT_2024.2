@@ -25,7 +25,7 @@ def obter_dados_sensores():
     pressao     = sense.get_pressure()
 
     # Simulação do valor da qualidade do ar
-    qualidade_ar = 75
+    qualidade_ar = 38
 
     return temperatura, umidade, pressao, qualidade_ar
 
@@ -37,8 +37,8 @@ def publicar_thingspeak(temperatura, umidade, pressao, qualidade_ar):
             print("Dados enviados para ThingSpeak com sucesso!")
         else:
             print("Erro ao enviar dados para o ThingSpeak!")
-	print("-" * 55)
-	time.sleep(5)
+	print("-" * 65)
+	time.sleep(1)
 
 
 # Função para exibir a mensagem no SenseHat
@@ -50,12 +50,12 @@ def exibir_mensagem(temperatura, umidade, pressao, qualidade_ar):
 
     # Item 4 - Informação na matriz de leds com as condições do tempo
     # Alerta das condições climáticas
-    if temperatura <= 25 and 40 <= umidade < 70 and pressao > 1014 and qualidade_ar <= 40:
+    if (20 <= temperatura <= 30 and 40 <= umidade <= 70 and 1014 <= pressao <= 1025 and qualidade_ar <= 40:
         # Condição normal
         cor_status = GREEN
-        status = "CONDICAO NORMAL"
+        status = "NORMAL"
 
-    elif (25 <= temperatura < 32 or 40 < umidade < 12 or 1014 <= pressao < 1025 or 40 < qualidade_ar < 80):
+    elif (12 <= temperatura < 20 or 30 < temperatura <= 36 or 21 <= umidade < 40 or 980 <= pressao < 1014 or 1025 < pressao <= 1030 or 40 < qualidade_ar <= 80):
         # Alerta de Atenção
         cor_status = YELLOW
         status = "ATENCAO"
@@ -79,4 +79,4 @@ while True:
 
     # Exibição das condições no SenseHat
     exibir_mensagem(temperatura, umidade, pressao, qualidade_ar)
-    time.sleep(5)
+    time.sleep(3)
